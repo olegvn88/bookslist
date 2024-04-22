@@ -1,7 +1,7 @@
 version: '1.0'
 services:
 #  client-backend:
-#    image: bookslist:0.0.1
+#    image: olegvn88/books:0.0.1
 #    build:
 #      context: .
 #      dockerfile: Dockerfile

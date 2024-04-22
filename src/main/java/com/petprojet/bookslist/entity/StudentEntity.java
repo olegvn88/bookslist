@@ -1,36 +1,33 @@
 package com.petprojet.bookslist.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "book")
-@Data
+@Table(name = "students")
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookEntity {
-
+public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "price")
-    private Double price;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "book_author",
+    @JoinTable(name = "student_course",
             joinColumns = {
-                    @JoinColumn(name = "book_id", referencedColumnName = "id")
+                    @JoinColumn(name = "student_id", referencedColumnName = "id")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "author_id", referencedColumnName = "id")
-            }
-    )
-    private Set<AuthorEntity> assignedAuthors = new HashSet<>();
+                    @JoinColumn(name = "course_id", referencedColumnName = "id")
+            })
+    private Set<CourseEntity> courses;
 }

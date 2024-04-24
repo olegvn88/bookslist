@@ -13,9 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Setter
-@Getter
 @Table(name = "author")
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +26,7 @@ public class AuthorEntity {
     private String name;
     private String genre;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "assignedAuthors")
+    @JsonIgnore
     private Set<BookEntity> books = new HashSet<>();
 }

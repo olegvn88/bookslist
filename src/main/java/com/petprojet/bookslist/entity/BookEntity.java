@@ -19,8 +19,9 @@ public class BookEntity {
     @Column(name = "price")
     private Double price;
 
+
     @ManyToMany
-    @JoinTable(name = "book_autor",
+    @JoinTable(
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class BookService {
@@ -30,6 +32,11 @@ public class BookService {
         if (book.isPresent()) {
             throw new BooksAlreadyExistsException(THE_BOOK_NAME_ALREADY_EXISTS);
         }
+
+        Stream<AuthorEntity> authors = bookEntity.getAssignedAuthors().stream().map(x -> authorRepo.findById(x.getId())
+                .orElseThrow(() -> new AuthorNotFoundException(String.format("Author id '%d' not found", x.getId()))));
+        bookEntity.setAssignedAuthors(authors.collect(Collectors.toSet()));
+
         return bookRepo.save(bookEntity);
     }
 
@@ -82,9 +89,6 @@ public class BookService {
             throw new AuthorNotFoundException("Author not found");
         }
 
-//        Set<AuthorEntity> authors = book.get().getAssignedAuthors();
-//        authors.add(author.get());
-//        book.get().setAssignedAuthors(authors);
         book.get().getAssignedAuthors().add(author.get());
         return bookRepo.save(book.get());
     }

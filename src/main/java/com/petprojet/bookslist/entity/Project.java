@@ -9,16 +9,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "course")
-@Setter
 @Getter
-public class CourseEntity {
+@Setter
+@Table(name = "PROJECT")
+public class Project {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
+    private Long projectId;
+    private String projectName;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "courses")
-    private Set<StudentEntity> students = new HashSet<>();
+    @ManyToMany(mappedBy = "assignedProjects")
+    private Set<Employee> employeeSet = new HashSet<>();
 }

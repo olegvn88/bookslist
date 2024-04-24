@@ -1,15 +1,15 @@
 package com.petprojet.bookslist.controller;
 
 import com.petprojet.bookslist.entity.StudentEntity;
-import com.petprojet.bookslist.repository.StudentRepo;
 import com.petprojet.bookslist.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("students")
+@RequestMapping("/students")
 public class StudentController {
     private final StudentService service;
 
@@ -19,7 +19,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentEntity> saveStudent(@RequestBody StudentEntity student) {
-        return ResponseEntity.ok(service.saveStudent(student));
+        return ResponseEntity.created(URI.create("")).body(service.saveStudent(student));
     }
 
     @GetMapping

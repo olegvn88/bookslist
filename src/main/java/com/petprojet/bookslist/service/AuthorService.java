@@ -43,6 +43,10 @@ public class AuthorService {
         if (authorById.isEmpty()) {
             throw new AuthorNotFoundException(AUTHOR_NOT_FOUND);
         }
+//        AuthorEntity authorEntity = new AuthorEntity();
+//        authorEntity.setId(authorId);
+//        authorEntity.setName(author.getName());
+//        authorEntity.setGenre(author.getGenre());
         AuthorEntity authorEntity = AuthorEntity.builder()
                                                 .id(authorId)
                                                 .name(author.getName())

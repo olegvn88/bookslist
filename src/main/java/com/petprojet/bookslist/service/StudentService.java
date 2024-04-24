@@ -1,14 +1,12 @@
 package com.petprojet.bookslist.service;
 
 import com.petprojet.bookslist.entity.StudentEntity;
+import com.petprojet.bookslist.exception.BooksAlreadyExistsException;
 import com.petprojet.bookslist.repository.StudentRepo;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -18,18 +16,20 @@ public class StudentService {
         this.repo = repo;
     }
 
-    @PostMapping
-    public StudentEntity saveStudent(@RequestBody StudentEntity student) {
-        return repo.save(student);
+    public StudentEntity saveStudent(StudentEntity studentEntity) {
+        Optional<StudentEntity> student = repo.findByName(studentEntity.getName());
+        if (student.isPresent()) {
+           throw new BooksAlreadyExistsException("student name is already taken");
+       }
+        return repo.save(studentEntity);
     }
 
-    @GetMapping
+
     public List<StudentEntity> getStudents() {
         return repo.findAll();
     }
 
-    @GetMapping("/{studentId}")
-    public StudentEntity getStudentById(@PathVariable Long studentId) {
+    public StudentEntity getStudentById(Long studentId) {
         return repo.findById(studentId).orElse(null);
     }
 }
